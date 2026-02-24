@@ -1,5 +1,6 @@
-import AnimatedSection from '@/components/AnimatedSection';
-import SectionHeading from '@/components/SectionHeading';
+'use client';
+
+import AnimatedSection from './AnimatedSection';
 
 const socialLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com' },
@@ -9,34 +10,36 @@ const socialLinks = [
 
 export default function Contact() {
   return (
-    <AnimatedSection id="contact" className="mx-auto w-full max-w-6xl px-6 py-24 md:px-10">
-      <SectionHeading
-        eyebrow="Contact"
-        title="Let’s connect"
-        description="If you’re building, hiring, or exploring AI product ideas, I’m always up for a great conversation."
-      />
+    <section id="contact" className="py-32 md:py-40 px-6 md:px-10">
+      <div className="mx-auto max-w-6xl text-center">
+        <AnimatedSection>
+          <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl lg:text-6xl tracking-tight">
+            Let&apos;s connect
+          </h2>
+          <div className="mt-8 w-16 h-px bg-border mx-auto" />
 
-      <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/8 to-white/[0.02] p-8">
-        <a
-          href="mailto:johnmcmillankelly@gmail.com"
-          className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] transition hover:text-[var(--accent)]"
-        >
-          johnmcmillankelly@gmail.com
-        </a>
-        <div className="mt-6 flex flex-wrap gap-3">
-          {socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/15 px-4 py-2 text-sm text-[var(--text-soft)] transition hover:border-[var(--accent)]/40 hover:text-[var(--text-primary)]"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
+          <a
+            href="mailto:johnmcmillankelly@gmail.com"
+            className="inline-block mt-12 text-xl md:text-2xl text-ink-light hover:text-ink border-b border-border hover:border-ink transition-colors duration-300 pb-1"
+          >
+            johnmcmillankelly@gmail.com
+          </a>
+
+          <div className="mt-10 flex justify-center gap-8">
+            {socialLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm text-ink-muted hover:text-ink transition-colors duration-300 tracking-wide"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </AnimatedSection>
       </div>
-    </AnimatedSection>
+    </section>
   );
 }

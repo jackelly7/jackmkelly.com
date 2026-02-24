@@ -1,9 +1,11 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-black/35">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-2 px-6 py-8 text-sm text-[var(--text-muted)] md:flex-row md:items-center md:px-10">
-        <p>© 2026 Jack Kelly</p>
-        <p>P.S. Still bullish on builders.</p>
+    <footer className="border-t border-border">
+      <div className="mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-2 px-6 md:px-10 py-8 text-sm text-ink-muted">
+        <p>&copy; 2026 Jack Kelly</p>
+        <p className="italic font-[family-name:var(--font-playfair)]">
+          Still bullish on builders.
+        </p>
       </div>
     </footer>
   );

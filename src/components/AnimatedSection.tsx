@@ -3,23 +3,27 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
-type AnimatedSectionProps = {
-  id?: string;
-  className?: string;
+export default function AnimatedSection({
+  children,
+  className = '',
+  delay = 0,
+  id,
+}: {
   children: ReactNode;
-};
-
-export default function AnimatedSection({ id, className, children }: AnimatedSectionProps) {
+  className?: string;
+  delay?: number;
+  id?: string;
+}) {
   return (
-    <motion.section
+    <motion.div
       id={id}
-      className={className}
-      initial={{ opacity: 0, y: 36 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, ease: 'easeOut' }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay }}
+      className={className}
     >
       {children}
-    </motion.section>
+    </motion.div>
   );
 }

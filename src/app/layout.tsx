@@ -1,47 +1,34 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Playfair_Display, Inter } from 'next/font/google';
 import '@/styles/globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const playfair = Playfair_Display({
+  variable: '--font-playfair',
   subsets: ['latin'],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://jackmkelly.com'),
   title: {
-    default: 'Jack Kelly | Builder. Optimist. AI Founder.',
+    default: 'Jack Kelly — Builder, Optimist, AI Founder',
     template: '%s | Jack Kelly',
   },
   description:
-    'Modern personal website for Jack Kelly — AI founder, builder, and optimist.',
+    'Personal website of Jack Kelly — AI founder, builder, and optimist.',
   openGraph: {
-    title: 'Jack Kelly | Builder. Optimist. AI Founder.',
+    title: 'Jack Kelly — Builder, Optimist, AI Founder',
     description:
-      'Founder of Vuely. BYU Information Systems. Full-stack + ML engineer building practical AI products.',
+      'Founder of Vuely. BYU Information Systems. Full-stack + ML engineer.',
     url: 'https://jackmkelly.com',
     siteName: 'Jack Kelly',
     type: 'website',
-    images: [
-      {
-        url: '/og-image.svg',
-        width: 1200,
-        height: 630,
-        alt: 'Jack Kelly personal website',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Jack Kelly | Builder. Optimist. AI Founder.',
-    description:
-      'Founder of Vuely. BYU Information Systems. Full-stack + ML engineer building practical AI products.',
-    images: ['/og-image.svg'],
   },
 };
 
@@ -51,8 +38,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+    <html lang="en">
+      <body className={`${playfair.variable} ${inter.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }

@@ -4,61 +4,66 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="relative isolate flex min-h-screen items-center overflow-hidden px-6 pt-28 md:px-10">
-      <div className="mesh-background" aria-hidden />
-      <div className="mesh-noise" aria-hidden />
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 relative">
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+        className="font-[family-name:var(--font-playfair)] text-[clamp(4rem,14vw,11rem)] leading-[0.85] tracking-[-0.03em] text-center text-ink"
+      >
+        Jack Kelly
+      </motion.h1>
 
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-start">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]"
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="mt-10 text-[11px] md:text-xs uppercase tracking-[0.35em] text-ink-muted text-center font-medium"
+      >
+        Builder &middot; Optimist &middot; AI Founder
+      </motion.p>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.7 }}
+        className="mt-4 text-ink-muted text-center max-w-md text-[15px] leading-relaxed"
+      >
+        Founder of Vuely &middot; BYU &middot; Full-Stack + ML
+      </motion.p>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.9 }}
+        className="mt-14 flex gap-8 items-center"
+      >
+        <a
+          href="#projects"
+          className="text-sm tracking-wide border-b border-ink pb-1 hover:border-ink-muted transition-colors duration-300"
         >
-          Founder · Engineer · Optimist
-        </motion.p>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          className="max-w-4xl text-balance text-5xl font-bold leading-[1.05] tracking-tight text-[var(--text-primary)] md:text-7xl"
+          See my work
+        </a>
+        <a
+          href="#contact"
+          className="text-sm tracking-wide text-ink-muted hover:text-ink transition-colors duration-300"
         >
-          Jack Kelly
-        </motion.h1>
+          Get in touch
+        </a>
+      </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.25 }}
-          className="mt-6 max-w-3xl text-balance text-xl text-[var(--text-soft)] md:text-2xl"
-        >
-          Builder. Optimist. AI founder who thinks we need more engineers, not less.
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.35 }}
-          className="mt-4 text-base text-[var(--text-muted)] md:text-lg"
-        >
-          Founder of Vuely · BYU · Full-Stack + ML
-        </motion.p>
-
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
+        className="absolute bottom-16"
+      >
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.45 }}
-          className="mt-10 flex flex-wrap gap-4"
-        >
-          <a href="#projects" className="btn-primary">
-            See my work
-          </a>
-          <a href="#contact" className="btn-secondary">
-            Get in touch
-          </a>
-        </motion.div>
-      </div>
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-px h-10 bg-border"
+        />
+      </motion.div>
     </section>
   );
 }

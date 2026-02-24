@@ -1,27 +1,34 @@
-import { ReactNode } from 'react';
+'use client';
 
-type TimelineItemProps = {
+import AnimatedSection from './AnimatedSection';
+
+interface TimelineItemProps {
+  date: string;
   role: string;
   company: string;
-  date: string;
-  children: ReactNode;
-};
+  children: React.ReactNode;
+}
 
-export default function TimelineItem({ role, company, date, children }: TimelineItemProps) {
+export default function TimelineItem({
+  date,
+  role,
+  company,
+  children,
+}: TimelineItemProps) {
   return (
-    <article className="relative pl-10">
-      <span className="absolute left-0 top-2 h-4 w-4 rounded-full border-2 border-[var(--accent)] bg-[var(--bg-primary)]" />
-      <span className="absolute left-[7px] top-6 h-[calc(100%+2.2rem)] w-px bg-white/15 last:hidden" aria-hidden />
-
-      <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-          <h3 className="text-lg font-semibold text-[var(--text-primary)]">
-            {role} <span className="text-[var(--text-muted)]">@ {company}</span>
-          </h3>
-          <p className="text-sm text-[var(--text-muted)]">{date}</p>
+    <AnimatedSection>
+      <div className="grid md:grid-cols-[180px_1fr] gap-4 md:gap-16 py-10 border-t border-border">
+        <span className="font-[family-name:var(--font-playfair)] text-ink-muted text-sm md:text-[15px] italic">
+          {date}
+        </span>
+        <div>
+          <h3 className="text-lg font-medium tracking-tight">{role}</h3>
+          <p className="text-ink-muted text-sm mt-1">{company}</p>
+          <p className="text-ink-light mt-3 leading-relaxed text-[15px]">
+            {children}
+          </p>
         </div>
-        <p className="mt-3 leading-7 text-[var(--text-soft)]">{children}</p>
       </div>
-    </article>
+    </AnimatedSection>
   );
 }

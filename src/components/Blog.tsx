@@ -10,29 +10,41 @@ export default async function Blog() {
   const latest = posts.slice(0, 3);
 
   return (
-    <AnimatedSection id="blog" className="mx-auto w-full max-w-6xl px-6 py-24 md:px-10">
-      <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading
-          eyebrow="Blog"
-          title="Writing about AI, product, and founder life"
-          description="Notes from the arena: what I’m learning while building real systems with AI."
-        />
-        <Link href="/blog" className="rounded-full border border-white/15 px-4 py-2 text-sm text-[var(--text-soft)] transition hover:border-[var(--accent)]/40 hover:text-[var(--text-primary)]">
-          View all posts
-        </Link>
-      </div>
+    <section id="blog" className="py-32 md:py-40 px-6 md:px-10">
+      <div className="mx-auto max-w-6xl">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-20">
+          <SectionHeading
+            title="Blog"
+            subtitle="Thoughts on AI, building products, and founder life."
+          />
+          {latest.length > 0 && (
+            <AnimatedSection>
+              <Link
+                href="/blog"
+                className="text-sm text-ink-muted border-b border-border hover:border-ink hover:text-ink transition-colors duration-300 pb-0.5"
+              >
+                View all posts
+              </Link>
+            </AnimatedSection>
+          )}
+        </div>
 
-      {latest.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-white/20 bg-white/[0.02] p-8 text-center">
-          <p className="text-lg text-[var(--text-soft)]">Coming soon — thoughts on AI, building products, and founder life.</p>
-        </div>
-      ) : (
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {latest.map((post) => (
-            <BlogCard key={post.slug} post={post} />
-          ))}
-        </div>
-      )}
-    </AnimatedSection>
+        {latest.length === 0 ? (
+          <AnimatedSection>
+            <div className="border border-dashed border-border py-16 px-8 text-center">
+              <p className="text-ink-muted text-lg italic font-[family-name:var(--font-playfair)]">
+                Coming soon — notes from the arena.
+              </p>
+            </div>
+          </AnimatedSection>
+        ) : (
+          <div className="grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
+            {latest.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

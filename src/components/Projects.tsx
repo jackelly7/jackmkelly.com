@@ -1,36 +1,42 @@
-import AnimatedSection from '@/components/AnimatedSection';
-import ProjectCard from '@/components/ProjectCard';
-import SectionHeading from '@/components/SectionHeading';
+'use client';
+
+import SectionHeading from './SectionHeading';
+import ProjectCard from './ProjectCard';
+
+const projects = [
+  {
+    title: 'Vuely',
+    description:
+      'AI-powered mockup generation for sign companies. Generates photorealistic renderings, reducing design time by ~80%. Built with Next.js, React, and Python ML models.',
+    tags: ['Next.js', 'React', 'Python', 'ML'],
+    href: 'https://vuely.co',
+    featured: true,
+  },
+  {
+    title: 'ATTY X ERP System',
+    description:
+      'Rebuilt an entire ERP system from scratch — 36+ operational tools spanning sales dashboards, finance, and ordering. Customer-facing HVAC site drove 250% increase in monthly installs.',
+    tags: ['PHP', 'React', 'SQL', 'TypeScript'],
+  },
+  {
+    title: 'More Coming Soon',
+    description: 'Always building. Check back for more projects.',
+    tags: [],
+  },
+];
 
 export default function Projects() {
   return (
-    <AnimatedSection id="projects" className="mx-auto w-full max-w-6xl px-6 py-24 md:px-10">
-      <SectionHeading
-        eyebrow="Projects"
-        title="Products that ship, scale, and create leverage"
-        description="I like hard technical problems tied to real outcomes: faster workflows, stronger operations, and better customer experiences."
-      />
+    <section id="projects" className="py-32 md:py-40 px-6 md:px-10">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading title="Projects" subtitle="Selected work." />
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <ProjectCard
-          featured
-          title="Vuely"
-          highlight="Featured"
-          description="AI-powered mockup generation for sign companies. Built with Next.js, React, and Python ML models. Delivers photorealistic renderings and cuts design time by around 80%."
-          stack={['Next.js', 'React', 'Python', 'ML Models']}
-          href="https://vuely.co"
-        />
-        <ProjectCard
-          title="ATTY X ERP System"
-          description="Rebuilt a full ERP system from scratch with 36+ operational tools across sales, finance, and ordering. Launched a customer HVAC ordering platform that drove a 250% increase in monthly installs and was adopted by 200+ employees."
-          stack={['PHP', 'React', 'SQL', 'TypeScript']}
-        />
-        <ProjectCard
-          title="More Projects"
-          description="I’m actively building. More experiments and production systems are on the way."
-          stack={['AI Agents', 'Infra', 'Product']}
-        />
+        <div className="grid md:grid-cols-2 gap-px bg-border">
+          {projects.map((p) => (
+            <ProjectCard key={p.title} {...p} />
+          ))}
+        </div>
       </div>
-    </AnimatedSection>
+    </section>
   );
 }

@@ -1,42 +1,59 @@
-import AnimatedSection from '@/components/AnimatedSection';
-import SectionHeading from '@/components/SectionHeading';
+'use client';
+
+import SectionHeading from './SectionHeading';
+import AnimatedSection from './AnimatedSection';
 
 export default function About() {
   return (
-    <AnimatedSection id="about" className="mx-auto w-full max-w-6xl px-6 py-24 md:px-10">
-      <SectionHeading
-        eyebrow="About"
-        title="I build products where optimism meets execution."
-        description="I care about what AI can unlock for real businesses, and I like shipping practical systems that people rely on every day."
-      />
+    <section id="about" className="py-32 md:py-40 px-6 md:px-10">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading title="About" />
 
-      <div className="grid gap-12 md:grid-cols-[1.5fr_1fr] md:items-start">
-        <div className="space-y-5 text-lg leading-8 text-[var(--text-soft)]">
-          <p>
-            I&apos;m the founder of Vuely, where we&apos;re building smart mockups for sign companies and quickly expanding toward every industry that needs visual sales workflows.
-            I&apos;m deeply positive on AI and where this is heading.
-          </p>
-          <p>
-            My view is simple: <span className="font-semibold text-[var(--text-primary)]">we need more engineers, not less.</span> At Vuely, we&apos;re on the front lines of AI,
-            buying servers to host AI agents, and we&apos;re still hiring more engineers to push what&apos;s possible.
-          </p>
-          <p>
-            I&apos;ve lived in Shanghai teaching English, served in Boston and Mexico City (I&apos;m fluent in Spanish), and learned to adapt quickly across cultures.
-            I&apos;m married, and being a husband, friend, and future father matters more to me than any title.
-          </p>
-          <p>
-            I&apos;m finishing Information Systems at BYU, graduating in April 2026. Quiet side notes: Eagle Scout and Arizona state volleyball champion.
-          </p>
-        </div>
+        <div className="grid md:grid-cols-5 gap-16 lg:gap-24 items-start">
+          <AnimatedSection className="md:col-span-3 space-y-7" delay={0.1}>
+            <p className="text-lg md:text-xl leading-[1.8] text-ink-light">
+              I&apos;m an AI founder building{' '}
+              <a
+                href="https://vuely.co"
+                className="text-ink border-b border-border hover:border-ink transition-colors duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vuely
+              </a>{' '}
+              — smart mockup generation for sign companies, and soon every
+              industry. We generate photorealistic renderings that cut design
+              time by ~80%.
+            </p>
+            <p className="text-lg md:text-xl leading-[1.8] text-ink-light">
+              I&apos;m extremely optimistic about AI. We need more engineers,
+              not less. At Vuely, we&apos;re on the front lines — buying
+              servers to host AI agents — and we&apos;re still hiring more
+              engineers.
+            </p>
+            <p className="text-lg md:text-xl leading-[1.8] text-ink-light">
+              I&apos;ve lived in Shanghai teaching English, served a mission in
+              Boston and Mexico City (fluent in Spanish), and I&apos;m finishing
+              my BYU Information Systems degree in April 2026. I&apos;m a
+              husband first, builder second.
+            </p>
+            <p className="text-sm text-ink-muted pt-4 tracking-wide">
+              Eagle Scout &middot; Arizona state volleyball champion
+            </p>
+          </AnimatedSection>
 
-        <div className="relative">
-          <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-white/10 to-white/0 p-2 shadow-[0_0_60px_-18px_rgba(38,127,255,0.55)]">
-            <div className="grid aspect-[4/5] place-items-center rounded-[1.25rem] border border-white/10 bg-[radial-gradient(circle_at_35%_20%,rgba(72,195,255,0.22),transparent_48%),#0a0f19]">
-              <p className="px-6 text-center text-sm text-[var(--text-muted)]">Photo placeholder</p>
+          <AnimatedSection
+            className="md:col-span-2 flex justify-center"
+            delay={0.3}
+          >
+            <div className="w-full aspect-[3/4] max-w-xs bg-cream-dark border border-border flex items-center justify-center">
+              <span className="text-xs text-ink-muted uppercase tracking-[0.2em]">
+                Photo
+              </span>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </div>
-    </AnimatedSection>
+    </section>
   );
 }

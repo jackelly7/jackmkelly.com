@@ -1,17 +1,25 @@
-import { ReactNode } from 'react';
+'use client';
 
-type SectionHeadingProps = {
-  eyebrow: string;
+import AnimatedSection from './AnimatedSection';
+
+export default function SectionHeading({
+  title,
+  subtitle,
+}: {
   title: string;
-  description?: ReactNode;
-};
-
-export default function SectionHeading({ eyebrow, title, description }: SectionHeadingProps) {
+  subtitle?: string;
+}) {
   return (
-    <div className="mb-12 max-w-3xl">
-      <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">{eyebrow}</p>
-      <h2 className="text-balance text-3xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">{title}</h2>
-      {description ? <p className="mt-4 text-lg text-[var(--text-soft)]">{description}</p> : null}
-    </div>
+    <AnimatedSection className="mb-20">
+      <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1]">
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="text-ink-muted text-lg mt-4 max-w-xl leading-relaxed">
+          {subtitle}
+        </p>
+      )}
+      <div className="mt-8 w-16 h-px bg-border" />
+    </AnimatedSection>
   );
 }

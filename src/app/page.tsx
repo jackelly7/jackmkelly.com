@@ -11,12 +11,17 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <main className="relative overflow-x-hidden bg-[var(--bg-primary)]">
+      <main className="relative overflow-x-hidden bg-cream">
         <Hero />
+        <hr />
         <About />
+        <hr />
         <Projects />
+        <hr />
         <Experience />
+        <hr />
         <Blog />
+        <hr />
         <Contact />
       </main>
       <Footer />
