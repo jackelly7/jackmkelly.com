@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import Navigation from '@/components/Navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 
 type BlogPostPageProps = {
@@ -40,20 +40,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { Content, meta } = post;
 
   return (
-    <>
-      <Navigation />
-      <main className="min-h-screen bg-[var(--bg-primary)] px-6 pb-24 pt-28 md:px-10">
-        <article className="mx-auto w-full max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.16em] text-[var(--accent)]">{meta.date}</p>
-          <h1 className="mt-3 text-balance text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">{meta.title}</h1>
-          <p className="mt-4 text-[var(--text-soft)]">{meta.excerpt}</p>
-          <div className="mt-10 border-t border-white/10 pt-6">
-            <div className="blog-content max-w-none">
-              <Content />
-            </div>
-          </div>
-        </article>
-      </main>
-    </>
+    <main className="blog-page">
+      <article className="blog-post-shell">
+        <Link href="/blog" className="inline-link">
+          Back to blog
+        </Link>
+        <p className="meta-row">{meta.date}</p>
+        <h1>{meta.title}</h1>
+        <p>{meta.excerpt}</p>
+        <div className="blog-content">
+          <Content />
+        </div>
+      </article>
+    </main>
   );
 }
