@@ -4,14 +4,13 @@ import SectionHeading from '@/components/SectionHeading';
 
 export default function Projects() {
   return (
-    <AnimatedSection id="projects" className="mx-auto w-full max-w-6xl px-6 py-24 md:px-10">
+    <AnimatedSection id="projects" className="relative mx-auto w-full max-w-7xl px-6 py-32 md:px-12">
       <SectionHeading
         eyebrow="Projects"
         title="Products that ship, scale, and create leverage"
-        description="I like hard technical problems tied to real outcomes: faster workflows, stronger operations, and better customer experiences."
       />
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="mt-16 grid gap-8 lg:grid-cols-2">
         <ProjectCard
           featured
           title="Vuely"
@@ -27,7 +26,7 @@ export default function Projects() {
         />
         <ProjectCard
           title="More Projects"
-          description="I’m actively building. More experiments and production systems are on the way."
+          description="I'm actively building. More experiments and production systems are on the way."
           stack={['AI Agents', 'Infra', 'Product']}
         />
       </div>

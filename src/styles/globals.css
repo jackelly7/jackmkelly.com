@@ -1,13 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #04060b;
-  --bg-secondary: #0a0f18;
-  --panel: #111827;
-  --accent: #5fc6ff;
-  --text-primary: #f8fafc;
-  --text-soft: #c6d0df;
-  --text-muted: #8d99ac;
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
+  --bg-elevated: #0f0f0f;
+  --accent-blue: #00a8ff;
+  --accent-blue-dim: rgba(0, 168, 255, 0.15);
+  --accent-amber: #ff8c00;
+  --accent-amber-dim: rgba(255, 140, 0, 0.12);
+  --text-primary: #f0f0f0;
+  --text-soft: #a8a8a8;
+  --text-muted: #555555;
+  --font-heading: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
 }
 
 * {
@@ -21,9 +26,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at 20% 10%, #0d1626 0%, #04060b 45%), var(--bg-primary);
+  background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-body);
 }
 
 a {
@@ -31,61 +36,167 @@ a {
   text-decoration: none;
 }
 
-.btn-primary,
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  padding: 0.7rem 1.3rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+/* ── Animated gradient mesh (hero background) ── */
+.mesh-background {
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 30%, rgba(0, 168, 255, 0.35), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255, 140, 0, 0.22), transparent),
+    radial-gradient(ellipse 50% 60% at 50% 80%, rgba(0, 168, 255, 0.18), transparent),
+    radial-gradient(ellipse 40% 50% at 70% 55%, rgba(255, 140, 0, 0.14), transparent),
+    radial-gradient(ellipse 55% 55% at 30% 70%, rgba(0, 80, 200, 0.12), transparent);
+  filter: blur(50px);
+  animation: meshCycle 16s ease-in-out infinite alternate;
 }
 
-.btn-primary {
-  border: 1px solid rgba(95, 198, 255, 0.7);
-  background: linear-gradient(135deg, rgba(95, 198, 255, 0.22), rgba(95, 198, 255, 0.1));
-  color: #e9f7ff;
+@keyframes meshCycle {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0.9;
+  }
+  25% {
+    transform: scale(1.06) translate3d(-3%, 2%, 0) rotate(1deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1) translate3d(2%, -1%, 0) rotate(-0.5deg);
+    opacity: 0.85;
+  }
+  75% {
+    transform: scale(1.04) translate3d(-1%, -3%, 0) rotate(0.5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.12) translate3d(3%, 2%, 0) rotate(-1deg);
+    opacity: 0.9;
+  }
 }
 
-.btn-secondary {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--text-soft);
+/* ── Floating blurred circle decorations ── */
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: orbFloat 20s ease-in-out infinite alternate;
 }
 
-.btn-primary:hover,
-.btn-secondary:hover {
+.floating-orb-blue {
+  background: rgba(0, 168, 255, 0.12);
+}
+
+.floating-orb-amber {
+  background: rgba(255, 140, 0, 0.08);
+}
+
+@keyframes orbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.1);
+  }
+  100% {
+    transform: translate(-20px, 15px) scale(0.95);
+  }
+}
+
+/* ── Glassmorphism card (projects) ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 8px 40px rgba(0, 168, 255, 0.1),
+    0 0 80px rgba(0, 168, 255, 0.04);
+  transform: translateY(-4px);
+}
+
+/* ── Glow card (blog) ── */
+.glow-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glow-card:hover {
+  border-color: rgba(0, 168, 255, 0.35);
+  box-shadow:
+    0 0 30px rgba(0, 168, 255, 0.12),
+    0 0 80px rgba(0, 168, 255, 0.06);
   transform: translateY(-2px);
 }
 
-.mesh-background {
-  position: absolute;
-  inset: -20%;
-  background:
-    radial-gradient(circle at 18% 22%, rgba(63, 159, 255, 0.28), transparent 52%),
-    radial-gradient(circle at 80% 32%, rgba(36, 205, 189, 0.2), transparent 45%),
-    radial-gradient(circle at 58% 75%, rgba(98, 84, 255, 0.18), transparent 55%);
-  filter: blur(18px);
-  animation: drift 16s ease-in-out infinite alternate;
+/* ── Experience card with left accent ── */
+.exp-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  transition: all 0.35s ease;
+  overflow: hidden;
 }
 
-.mesh-noise {
+.exp-card::before {
+  content: '';
   position: absolute;
-  inset: 0;
-  background-image: linear-gradient(transparent 96%, rgba(255, 255, 255, 0.03));
-  background-size: 100% 4px;
-  opacity: 0.22;
-  pointer-events: none;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent-blue), var(--accent-amber));
+  opacity: 0.6;
+  transition: opacity 0.35s ease, width 0.35s ease;
 }
 
+.exp-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.exp-card:hover::before {
+  opacity: 1;
+  width: 4px;
+}
+
+/* ── Nav states ── */
+.nav-transparent {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.nav-scrolled {
+  background: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Hero text glow ── */
+.hero-glow {
+  text-shadow:
+    0 0 60px rgba(0, 168, 255, 0.25),
+    0 0 120px rgba(0, 168, 255, 0.1);
+}
+
+/* ── Blog content ── */
 .blog-content h1,
 .blog-content h2,
 .blog-content h3,
 .blog-content h4 {
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  font-family: var(--font-heading);
+  letter-spacing: -0.03em;
 }
 
 .blog-content p,
@@ -95,16 +206,7 @@ a {
 }
 
 .blog-content a {
-  color: var(--accent);
+  color: var(--accent-blue);
   text-decoration: underline;
   text-underline-offset: 4px;
-}
-
-@keyframes drift {
-  0% {
-    transform: scale(1.05) translate3d(-1.5%, 0.5%, 0);
-  }
-  100% {
-    transform: scale(1.1) translate3d(1.5%, -1%, 0);
-  }
 }

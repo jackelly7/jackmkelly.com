@@ -14,38 +14,54 @@ type ProjectCardProps = {
 export default function ProjectCard({ title, description, stack, highlight, href, featured = false }: ProjectCardProps) {
   const card = (
     <motion.article
-      whileHover={{ y: -6, scale: 1.01 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      className={`group relative overflow-hidden rounded-3xl border border-white/12 bg-gradient-to-br from-white/8 to-white/[0.03] p-6 shadow-xl shadow-black/30 ${
-        featured ? 'md:col-span-2 md:p-8' : ''
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className={`glass-card group relative overflow-hidden p-8 ${
+        featured ? 'lg:col-span-2 lg:p-10' : ''
       }`}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(56,148,255,0.25),transparent_55%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="relative">
-        {highlight ? <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent)]">{highlight}</p> : null}
-        <h3 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">{title}</h3>
-        <p className="mt-3 text-[var(--text-soft)]">{description}</p>
+      {/* Hover gradient overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_20%_20%,rgba(0,168,255,0.12),transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-        <div className="mt-5 flex flex-wrap gap-2">
+      <div className="relative">
+        {highlight && (
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-amber)]">
+            {highlight}
+          </p>
+        )}
+
+        <h3
+          className="text-2xl font-bold tracking-tight text-white md:text-3xl"
+          style={{ fontFamily: 'var(--font-heading)' }}
+        >
+          {title}
+        </h3>
+
+        <p className="mt-4 leading-7 text-[var(--text-soft)]">{description}</p>
+
+        <div className="mt-6 flex flex-wrap gap-2">
           {stack.map((tech) => (
-            <span key={tech} className="rounded-full border border-white/15 px-3 py-1 text-xs text-[var(--text-muted)]">
+            <span
+              key={tech}
+              className="rounded-full border border-white/8 bg-white/5 px-3 py-1 text-xs font-medium text-[var(--text-muted)]"
+            >
               {tech}
             </span>
           ))}
         </div>
 
         {href ? (
-          <p className="mt-6 text-sm font-medium text-[var(--accent)] transition group-hover:text-[#85d6ff]">Visit project &rarr;</p>
+          <p className="mt-8 text-sm font-semibold text-[var(--accent-blue)] transition-colors duration-300 group-hover:text-[var(--accent-amber)]">
+            Visit project &rarr;
+          </p>
         ) : (
-          <p className="mt-6 text-sm text-[var(--text-muted)]">More coming soon</p>
+          <p className="mt-8 text-sm text-[var(--text-muted)]">More coming soon</p>
         )}
       </div>
     </motion.article>
   );
 
-  if (!href) {
-    return card;
-  }
+  if (!href) return card;
 
   return (
     <a href={href} target="_blank" rel="noreferrer" className="block">

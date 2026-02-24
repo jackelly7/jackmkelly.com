@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -14,20 +14,35 @@ const navLinks = [
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/45 backdrop-blur-lg">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-        <Link href="/" className="text-lg font-semibold tracking-tight text-[var(--text-primary)]">
-          Jack Kelly
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled ? 'nav-scrolled' : 'nav-transparent'
+      }`}
+    >
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 md:px-12">
+        <Link
+          href="/"
+          className="text-xl font-bold tracking-tight text-[var(--text-primary)] transition-colors hover:text-[var(--accent-blue)]"
+          style={{ fontFamily: 'var(--font-heading)' }}
+        >
+          JK
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-10 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-sm font-medium text-[var(--text-soft)] transition hover:text-[var(--text-primary)]"
+              className="text-sm font-medium tracking-wide text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--text-primary)]"
             >
               {link.label}
             </Link>
@@ -35,50 +50,43 @@ export default function Navigation() {
         </nav>
 
         <button
-          className="relative h-9 w-9 rounded-md border border-white/15 bg-white/5 md:hidden"
+          className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-colors hover:bg-white/10 md:hidden"
           onClick={() => setOpen((prev) => !prev)}
           aria-label="Toggle navigation"
           aria-expanded={open}
         >
           <span className="sr-only">Menu</span>
-          <span className="absolute left-2 right-2 top-3 h-0.5 bg-white" />
-          <span className="absolute left-2 right-2 top-[17px] h-0.5 bg-white" />
-          <span className="absolute left-2 right-2 top-[22px] h-0.5 bg-white" />
+          <div className="flex w-5 flex-col gap-1.5">
+            <span className={`h-px bg-white transition-all duration-300 ${open ? 'translate-y-[3.5px] rotate-45' : ''}`} />
+            <span className={`h-px bg-white transition-all duration-300 ${open ? '-translate-y-[3.5px] -rotate-45' : ''}`} />
+          </div>
         </button>
       </div>
 
       <AnimatePresence>
-        {open ? (
+        {open && (
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 0.24, ease: 'easeOut' }}
-            className="fixed right-0 top-0 h-screen w-72 border-l border-white/10 bg-[#05070c]/95 p-6 backdrop-blur-xl md:hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-x-0 top-full border-b border-white/8 bg-[#050505]/95 backdrop-blur-2xl md:hidden"
           >
-            <div className="mb-8 flex items-center justify-between">
-              <p className="text-sm text-[var(--text-soft)]">Navigate</p>
-              <button
-                className="rounded-md border border-white/15 px-2 py-1 text-xs text-[var(--text-soft)]"
-                onClick={() => setOpen(false)}
-              >
-                Close
-              </button>
-            </div>
-            <nav className="flex flex-col gap-5">
-              {navLinks.map((link) => (
+            <nav className="flex flex-col px-6 py-6">
+              {navLinks.map((link, i) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-base font-medium text-[var(--text-primary)]"
+                  className="border-b border-white/5 py-4 text-lg font-medium text-[var(--text-primary)] transition-colors hover:text-[var(--accent-blue)]"
                   onClick={() => setOpen(false)}
+                  style={{ animationDelay: `${i * 50}ms` }}
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
           </motion.div>
-        ) : null}
+        )}
       </AnimatePresence>
     </header>
   );

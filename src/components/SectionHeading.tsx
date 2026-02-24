@@ -8,10 +8,19 @@ type SectionHeadingProps = {
 
 export default function SectionHeading({ eyebrow, title, description }: SectionHeadingProps) {
   return (
-    <div className="mb-12 max-w-3xl">
-      <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">{eyebrow}</p>
-      <h2 className="text-balance text-3xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">{title}</h2>
-      {description ? <p className="mt-4 text-lg text-[var(--text-soft)]">{description}</p> : null}
+    <div className="max-w-3xl">
+      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent-blue)]">
+        {eyebrow}
+      </p>
+      <h2
+        className="text-balance text-3xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl"
+        style={{ fontFamily: 'var(--font-heading)' }}
+      >
+        {title}
+      </h2>
+      {description && (
+        <p className="mt-5 text-lg leading-relaxed text-[var(--text-soft)]">{description}</p>
+      )}
     </div>
   );
 }
