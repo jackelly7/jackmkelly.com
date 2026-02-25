@@ -15,7 +15,7 @@ export const BLOBS: BlobConfig[] = [
   {
     id: 'about',
     label: 'About',
-    size: 0.72,
+    size: 0.62,
     desktopPosition: [-2.2, 1.25, -0.5],
     mobilePosition: [0, 2.8, 0],
     colorBias: [0.92, 0.86, 1.15],
@@ -23,7 +23,7 @@ export const BLOBS: BlobConfig[] = [
   {
     id: 'projects',
     label: 'Projects',
-    size: 1,
+    size: 0.76,
     desktopPosition: [0.4, 0.5, 0.2],
     mobilePosition: [0, 1.3, 0],
     colorBias: [1.15, 0.95, 1.2],
@@ -31,7 +31,7 @@ export const BLOBS: BlobConfig[] = [
   {
     id: 'experience',
     label: 'Experience',
-    size: 0.82,
+    size: 0.66,
     desktopPosition: [2.2, -0.2, -0.3],
     mobilePosition: [0, -0.2, 0],
     colorBias: [0.88, 1.1, 1.18],
@@ -39,7 +39,7 @@ export const BLOBS: BlobConfig[] = [
   {
     id: 'blog',
     label: 'Blog',
-    size: 0.7,
+    size: 0.6,
     desktopPosition: [-1.1, -1.95, 0.4],
     mobilePosition: [0, -1.7, 0],
     colorBias: [1.2, 1.03, 0.9],
@@ -47,7 +47,7 @@ export const BLOBS: BlobConfig[] = [
   {
     id: 'contact',
     label: 'Contact',
-    size: 0.58,
+    size: 0.52,
     desktopPosition: [2.05, -1.7, 0],
     mobilePosition: [0, -3.2, 0],
     colorBias: [0.9, 1.15, 1.03],

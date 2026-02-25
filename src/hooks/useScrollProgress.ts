@@ -9,9 +9,15 @@ export function useScrollProgress() {
 
   useEffect(() => {
     const updateProgress = () => {
-      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-      const raw = window.scrollY / maxScroll;
-      setScrollProgress(Math.min(1, Math.max(0, raw * 1.45)));
+      const root = document.documentElement;
+      const maxScroll = Math.max(
+        root.scrollHeight - root.clientHeight,
+        document.body.scrollHeight - window.innerHeight,
+        1,
+      );
+      const currentScroll = window.scrollY || window.pageYOffset || root.scrollTop || 0;
+      const raw = currentScroll / maxScroll;
+      setScrollProgress(Math.min(1, Math.max(0, raw * 1.1)));
     };
 
     updateProgress();

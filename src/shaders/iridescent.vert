@@ -48,9 +48,9 @@ void main() {
   float detailMix = uIsMobile ? 0.3 : 0.55;
   float wobble = mix(noiseA, noiseB, detailMix);
 
-  float breathing = sin(uTime * 0.9 + transformed.y * 2.1) * 0.025;
-  float hoverPulse = sin(uTime * 3.8 + transformed.x * 9.0) * 0.015 * uHover;
-  float displacement = (wobble - 0.5) * 0.13 * uIntensity + breathing + hoverPulse;
+  float breathing = sin(uTime * 0.9 + transformed.y * 2.1) * 0.014;
+  float hoverPulse = sin(uTime * 3.8 + transformed.x * 9.0) * 0.009 * uHover;
+  float displacement = (wobble - 0.5) * 0.08 * uIntensity + breathing + hoverPulse;
 
   transformed += normal * displacement;
 
