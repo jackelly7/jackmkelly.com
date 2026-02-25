@@ -7,12 +7,16 @@ import { useSiteStore } from '@/lib/store';
 
 export default function HeroOverlay() {
   const mode = useSiteStore((state) => state.mode);
+  const scrollProgress = useSiteStore((state) => state.scrollProgress);
+
+  const hidden = mode === 'expanded' || mode === 'separated' || scrollProgress > 0.08;
 
   return (
     <motion.div
       className="hero-overlay"
-      animate={{ opacity: mode === 'expanded' ? 0 : 1, y: mode === 'expanded' ? -24 : 0 }}
-      transition={{ duration: 0.45, ease: 'easeOut' }}
+      animate={{ opacity: hidden ? 0 : 1, y: hidden ? -40 : 0 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      style={{ pointerEvents: hidden ? 'none' : 'auto' }}
     >
       <motion.h1
         initial={{ opacity: 0, y: 16 }}

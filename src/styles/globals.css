@@ -115,26 +115,12 @@ a {
 
 .hero-overlay {
   position: absolute;
-  top: 20vh;
+  top: 50%;
   left: 50%;
   width: min(92vw, 820px);
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   text-align: center;
   z-index: 4;
-}
-
-.hero-overlay::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  width: min(78vw, 700px);
-  height: min(58vw, 360px);
-  transform: translate(-50%, -50%);
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(5, 5, 5, 0.82) 0%, rgba(5, 5, 5, 0.2) 60%, transparent 78%);
-  z-index: -1;
-  pointer-events: none;
 }
 
 .hero-overlay h1 {
@@ -142,20 +128,27 @@ a {
   font-size: clamp(2.5rem, 8vw, 6.2rem);
   line-height: 1;
   letter-spacing: -0.03em;
-  text-shadow: 0 14px 42px rgba(0, 0, 0, 0.75);
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.9),
+    0 8px 40px rgba(0, 0, 0, 0.7),
+    0 0 80px rgba(0, 0, 0, 0.5);
 }
 
 .hero-overlay .tagline {
   margin: 1rem 0 0;
   font-size: clamp(1.05rem, 2vw, 1.6rem);
   color: #f7f8ff;
-  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.9),
+    0 6px 30px rgba(0, 0, 0, 0.6);
 }
 
 .hero-overlay .subtitle {
   margin: 0.6rem 0 0;
   color: var(--text-muted);
-  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.9),
+    0 4px 24px rgba(0, 0, 0, 0.6);
 }
 
 .scroll-hint {
@@ -180,6 +173,8 @@ a {
   letter-spacing: 0.12em;
   font-size: 0.73rem;
   opacity: 0;
+  cursor: pointer;
+  pointer-events: auto;
   transition: color 180ms ease, transform 180ms ease;
 }
 
@@ -431,7 +426,7 @@ a {
 
 @media (max-width: 900px) {
   .hero-overlay {
-    top: 12vh;
+    top: 50%;
   }
 
   .section-panel {

@@ -34,9 +34,7 @@ export const useSiteStore = create<SiteState>((set) => ({
           ? 'expanded'
           : scrollProgress > 0.24
             ? 'separated'
-            : state.mode === 'loading'
-              ? 'loading'
-              : 'idle';
+            : 'idle';
 
       return { mode: nextMode, scrollProgress };
     }),

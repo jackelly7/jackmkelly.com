@@ -10,6 +10,7 @@ export default function BlobLabels() {
   const mode = useSiteStore((state) => state.mode);
   const activeBlob = useSiteStore((state) => state.activeBlob);
   const hoveredBlob = useSiteStore((state) => state.hoveredBlob);
+  const setActiveBlob = useSiteStore((state) => state.setActiveBlob);
   const isMobile = useSiteStore((state) => state.isMobile);
 
   const showLabels = mode !== 'loading' && scrollProgress > 0.15;
@@ -18,8 +19,8 @@ export default function BlobLabels() {
     <div className="blob-label-layer" aria-hidden>
       {BLOBS.map((blob) => {
         const pos = isMobile ? blob.mobilePosition : blob.desktopPosition;
-        const x = 50 + pos[0] * 11;
-        const y = 45 - pos[1] * 10;
+        const x = 50 + pos[0] * 12;
+        const y = 50 - pos[1] * 14 + 10;
 
         const isActive = activeBlob === blob.id;
         const isHovered = hoveredBlob === blob.id;
@@ -32,6 +33,7 @@ export default function BlobLabels() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: showLabels ? 1 : 0, y: showLabels ? 0 : 12 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
+            onClick={() => setActiveBlob(blob.id)}
           >
             {blob.label}
           </motion.span>

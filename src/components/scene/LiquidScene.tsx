@@ -29,7 +29,7 @@ function FloatingRig() {
 export default function LiquidScene() {
   return (
     <Canvas
-      camera={{ position: [0, 0, 9.6], fov: 32 }}
+      camera={{ position: [0, -0.15, 5.2], fov: 50 }}
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ background: 'transparent' }}

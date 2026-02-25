@@ -20,7 +20,6 @@ export default function MetaBalls() {
   const materialRefs = useRef<Array<{ uTime: number; uHover: number; uIntensity: number; uIsMobile: boolean; uColorBias: Vector3 } | null>>([]);
   const mobileFrameAccumulator = useRef(0);
 
-  const mode = useSiteStore((state) => state.mode);
   const hoveredBlob = useSiteStore((state) => state.hoveredBlob);
   const activeBlob = useSiteStore((state) => state.activeBlob);
   const scrollProgress = useSiteStore((state) => state.scrollProgress);
@@ -28,11 +27,11 @@ export default function MetaBalls() {
 
   const clusterPositions = useMemo<Array<[number, number, number]>>(
     () => [
-      [-1.35, 0.92, -0.7],
-      [1.1, 0.7, -0.55],
-      [1.28, -0.75, -0.8],
-      [-1.05, -0.86, -0.6],
-      [0.0, -1.38, -0.7],
+      [-0.08, 0.1, 0],
+      [0.12, 0.06, -0.05],
+      [0.15, -0.1, 0.03],
+      [-0.08, -0.15, -0.03],
+      [0.03, -0.22, 0],
     ],
     [],
   );
@@ -47,8 +46,23 @@ export default function MetaBalls() {
     }
 
     const elapsed = clock.getElapsedTime();
-    const landingProgress = smoothstep(0.08, 2, elapsed);
-    const loadDropOffset = (1 - landingProgress) * 6.2;
+
+    // Dramatic landing: fast drop (0-0.8s), overshoot, rubber-band settle
+    const dropPhase = smoothstep(0.05, 0.8, elapsed); // fast drop
+    const settlePhase = smoothstep(0.8, 2.0, elapsed); // settle after overshoot
+    const overshoot = Math.sin(dropPhase * Math.PI) * 0.4; // overshoot below center
+    const loadDropOffset = (1 - dropPhase) * 8.0 - overshoot * (1 - settlePhase);
+
+    // Squash & stretch on landing
+    const squashAmount = Math.sin(dropPhase * Math.PI) * 0.15 * (1 - settlePhase);
+    const scaleX = 1 + squashAmount;
+    const scaleY = 1 - squashAmount;
+
+    // Scale: start small, overshoot to 1.1, settle at 1.0
+    const loadScaleBase = MathUtils.lerp(0.3, 1.1, dropPhase);
+    const loadScaleSettle = MathUtils.lerp(loadScaleBase, 1.0, settlePhase);
+    const landingDone = elapsed > 2.0;
+
     const breathe = Math.sin(elapsed * 1.1) * 0.025;
     const separation = smoothstep(0.14, 0.6, scrollProgress);
 
@@ -64,10 +78,10 @@ export default function MetaBalls() {
       const target = new Vector3(
         MathUtils.lerp(cluster[0], separated[0], separation),
         MathUtils.lerp(cluster[1], separated[1], separation),
-        MathUtils.lerp(cluster[2], separated[2] - 0.35, separation),
+        MathUtils.lerp(cluster[2], separated[2] - 0.2, separation),
       );
 
-      if (mode === 'loading') {
+      if (!landingDone) {
         target.y += loadDropOffset;
       }
 
@@ -82,15 +96,6 @@ export default function MetaBalls() {
           const edgeY = 1.8 - index * 0.95;
           target.set(edgeX, edgeY, -1.2);
         }
-      } else {
-        const center = new Vector3(target.x, target.y * 1.2, 0);
-        const centerDist = center.length();
-        const heroVoidRadius = isMobile ? 1.05 : 1.28;
-        if (centerDist > 0.0001 && centerDist < heroVoidRadius) {
-          center.normalize().multiplyScalar(heroVoidRadius - centerDist + 0.06);
-          target.x += center.x;
-          target.y += center.y / 1.2;
-        }
       }
 
       target.x += pointer.x * 0.08;
@@ -98,13 +103,18 @@ export default function MetaBalls() {
 
       group.position.lerp(target, 0.07);
 
-      const idleScale = 0.54 + config.size * 0.22 + breathe;
-      const hoverScale = isHovered ? 1.12 : 1;
-      const activeScale = activeBlob ? (isActive ? (isMobile ? 1.75 : 2.05) : 0.52) : 1;
-      const loadScale = mode === 'loading' ? 0.62 + landingProgress * 0.35 : 1;
-      const finalScale = idleScale * hoverScale * activeScale * loadScale;
+      const baseScale = config.size + breathe;
+      const separationScale = MathUtils.lerp(1.0, 0.8, separation);
+      const hoverScale = isHovered ? 1.18 : 1;
+      const activeScale = activeBlob ? (isActive ? (isMobile ? 1.75 : 2.05) : 0.42) : 1;
+      const loadScale = landingDone ? 1 : loadScaleSettle;
+      const finalScale = baseScale * separationScale * hoverScale * activeScale * loadScale;
 
-      group.scale.lerp(new Vector3(finalScale, finalScale, finalScale), 0.09);
+      const sx = finalScale * (landingDone ? 1 : scaleX);
+      const sy = finalScale * (landingDone ? 1 : scaleY);
+      const sz = finalScale;
+
+      group.scale.lerp(new Vector3(sx, sy, sz), 0.09);
 
       const material = materialRefs.current[index];
       if (material) {
@@ -122,15 +132,15 @@ export default function MetaBalls() {
         <BlobInteraction key={blob.id} section={blob.id}>
           <group ref={(node) => (groupRefs.current[index] = node)}>
             <MarchingCubes
-              resolution={isMobile ? 52 : 92}
-              maxPolyCount={isMobile ? 52000 : 180000}
+              resolution={isMobile ? 56 : 120}
+              maxPolyCount={isMobile ? 60000 : 240000}
               enableUvs={false}
               enableColors={false}
-              scale={0.7}
+              scale={2.0}
             >
-              <MarchingCube strength={0.68 * blob.size} subtract={0.96} color={new Color(0xffffff)} position={[0, 0, 0]} />
-              <MarchingCube strength={0.46 * blob.size} subtract={0.96} color={new Color(0xffffff)} position={[0.25, 0.11, -0.08]} />
-              <MarchingCube strength={0.38 * blob.size} subtract={0.96} color={new Color(0xffffff)} position={[-0.22, -0.2, 0.05]} />
+              <MarchingCube strength={0.72 * blob.size} subtract={0.88} color={new Color(0xffffff)} position={[0, 0, 0]} />
+              <MarchingCube strength={0.52 * blob.size} subtract={0.88} color={new Color(0xffffff)} position={[0.18, 0.08, -0.05]} />
+              <MarchingCube strength={0.44 * blob.size} subtract={0.88} color={new Color(0xffffff)} position={[-0.16, -0.14, 0.03]} />
               <iridescentShaderMaterial
                 ref={(node) => {
                   materialRefs.current[index] = node as (typeof materialRefs.current)[number];
